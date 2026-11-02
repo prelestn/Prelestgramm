@@ -34,6 +34,14 @@ jobs:
       - name: Права на gradlew
         run: chmod +x gradlew
 
+      - name: Создать API_KEYS (placeholder)
+        run: |
+          cat > API_KEYS << 'KEYS'
+          APP_ID=1
+          APP_HASH=placeholder
+          MAPS_V2_API=placeholder
+          KEYS
+
       - name: Сборка debug APK
         run: ./gradlew :TMessagesProj_App:assembleDebug --stacktrace
         env:
