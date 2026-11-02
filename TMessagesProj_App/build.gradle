@@ -20,6 +20,9 @@ dependencies {
 }
 
 android {
+    // ФИКС: namespace обязателен в AGP 8.x
+    namespace 'com.prelestgram.app'
+
     compileSdkVersion 33
     buildToolsVersion '33.0.0'
 
@@ -33,15 +36,17 @@ android {
         disable 'BlockedPrivateApi'
     }
 
-    dexOptions {
-        jumboMode = true
-    }
+    // dexOptions УДАЛЁН — obsolete в AGP 8
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
 
         coreLibraryDesugaringEnabled true
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -166,10 +171,6 @@ android {
                 arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-16', "-j=16"
             }
         }
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 
     lintOptions {
