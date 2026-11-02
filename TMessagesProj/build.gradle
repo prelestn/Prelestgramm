@@ -44,18 +44,27 @@ dependencies {
     }
     implementation 'org.osmdroid:osmdroid-android:6.1.14'
 
+    // OkHttp для REST/WebSocket вместо MTProto
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.12.0'
+
+    // JWT декодинг на клиенте
+    implementation 'com.auth0.android:jwtdecode:2.0.2'
+
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 }
 
 def isWindows = String.valueOf(DefaultNativePlatform.currentOperatingSystem.toFamilyName() == OperatingSystemFamily.WINDOWS)
 
-//return an api key from a properties file.
-def getAppId(){
+// Читаем APP_ID из файла API_KEYS
+def getAppId() {
     Properties properties = new Properties()
     properties.load(new FileInputStream("./API_KEYS"))
     return properties.get("APP_ID")
 }
-def getAppHash(){
+
+// Читаем APP_HASH из файла API_KEYS
+def getAppHash() {
     Properties properties = new Properties()
     properties.load(new FileInputStream("./API_KEYS"))
     return "\"" + properties.get("APP_HASH") + "\""
@@ -74,15 +83,18 @@ android {
         }
     }
 
+    // ФИКС: включаем buildConfig явно (AGP 8.x отключает по умолчанию)
+    buildFeatures {
+        buildConfig true
+    }
+
     lintOptions {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
         disable 'BlockedPrivateApi'
     }
 
-    dexOptions {
-        jumboMode = true
-    }
+    // dexOptions УДАЛЁН — obsolete в AGP 8, AGP сам оптимизирует dex
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -99,7 +111,8 @@ android {
         versionName "8.9.0"
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
-        //obtain your own keys at https://core.telegram.org/api/obtaining_api_id
+
+        // Ключи Telegram API (получи на https://core.telegram.org/api/obtaining_api_id)
         buildConfigField 'int', 'APP_ID', getAppId()
         buildConfigField 'String', 'APP_HASH', getAppHash()
 
@@ -201,7 +214,6 @@ android {
         }
     }
 }
-
 
 def getProps(String propName) {
     def propsFile = rootProject.file('local.properties')
