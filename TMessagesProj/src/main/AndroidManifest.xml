@@ -114,6 +114,14 @@
         android:allowAudioPlaybackCapture="true"
         tools:replace="android:supportsRtl">
 
+        <!-- Экран авторизации Prelestgram (замена MTProto-авторизации) -->
+        <activity
+            android:name="org.telegram.prelest.auth.PrelestAuthActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TMessages.Start"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
         <activity-alias
             android:enabled="true"
             android:name="org.telegram.messenger.DefaultIcon"
