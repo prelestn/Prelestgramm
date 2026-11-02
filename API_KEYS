@@ -1,0 +1,5 @@
+# Prelestgram — ключи не используются (MTProto вырезан)
+# Файл нужен для совместимости с TMessagesProj/build.gradle
+APP_ID=1
+APP_HASH=placeholder
+MAPS_V2_API=placeholder
